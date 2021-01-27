@@ -6,6 +6,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -28,7 +29,7 @@ public class VisualizarEventos extends AppCompatActivity {
     private itemListaEvento adapter;
 
 
-    //0peração = 0 indica entrada e operação = 1indica saída
+    //0peracao = 0 indica entrada e operacao = 1 indica saida
     private int operacao = -1;
 
 
@@ -46,7 +47,7 @@ public class VisualizarEventos extends AppCompatActivity {
 
         Intent intencao = getIntent();
         operacao = intencao.getIntExtra("acao", -1);
-        //0 - entrada e 1 - saída
+        //0 - entrada e 1 - saida
 
         ajustaOperacao();
         cadastrarEventos();
@@ -109,6 +110,31 @@ public class VisualizarEventos extends AppCompatActivity {
 
         adapter = new itemListaEvento(getApplicationContext(), eventos);
         listaEventos.setAdapter(adapter);
+
+        listaEventos.setOnClickListener((new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listaEventos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int indice, long id) {
+                        Evento eventoSelecionado = eventos.get(indice);
+                        Intent novoFluxo = new Intent(VisualizarEventos.this, CadastroEdicaoEvento.class);
+                        if(operacao == 0){
+                            novoFluxo.putExtra("acao", 2);
+
+                        }else{
+                            novoFluxo.putExtra("acao", 3);
+                        }
+
+                        novoFluxo.putExtra("acao", eventoSelecionado.getId()+ "");
+
+                        startActivityForResult(novoFluxo, operacao);
+                    }
+                });
+            }
+        }));
+
+
 
         double total = 0.0;
         for(int i = 0; i < eventos.size(); i++ ){

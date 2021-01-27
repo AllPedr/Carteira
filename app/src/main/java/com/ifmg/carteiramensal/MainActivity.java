@@ -1,8 +1,12 @@
 package com.ifmg.carteiramensal;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -47,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         anteriorBtn = (Button) findViewById(R.id.anteriorBtn);
         proxBtn = (Button) findViewById(R.id.proximoBtn);
         novoBtn = (Button) findViewById(R.id.novoBtn);
-        //responsável por emplementar todos os eventos de botões
+        //responsavel por emplementar todos os eventos de botoes
         cadastroEventos();
 
 
@@ -57,7 +61,16 @@ public class MainActivity extends AppCompatActivity {
 
         mostraDataApp();
         atualizaValores();
+        configuraPermissoes();
 
+    }
+    private void configuraPermissoes(){
+        if(ContextCompat.checkSelfPermission(getBaseContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
+            || ContextCompat.checkSelfPermission(getBaseContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(getBaseContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(MainActivity.this,
+                    new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE},0);
+        }
     }
     private void cadastroEventos(){
         anteriorBtn.setOnClickListener(new View.OnClickListener() {
@@ -102,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent trocaAct = new Intent(MainActivity.this, VisualizarEventos.class);
 
                 trocaAct.putExtra("acao", 1);
-                //pedimos para iniciar a activity passada como parametro
+                //pedindo para iniciar a activity passada como parametro
                 startActivityForResult(trocaAct, 1);
             }
         });
@@ -122,13 +135,13 @@ public class MainActivity extends AppCompatActivity {
     }
     private void atualizaMes(int ajuste){
         dataApp.add(Calendar.MONTH, ajuste);
-        //próximo ês não pode passar do mês atual
+        //proximo mes nao pode passar do mes atual
         if(ajuste > 0){
             if(dataApp.after(hoje)){
                 dataApp.add(Calendar.MONTH,-1);
             }
         }else{
-            //busca no banco de dados para avaliar se há dados dos messes anteriores
+            //busca no banco de dados para avaliar se tem dados dos messes anteriores
         }
 
 
@@ -137,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private  void atualizaValores(){
-        //buscando as entradas e as saídas nesse memo banco de dados
+        //buscando as entradas e as saidas nesse memo banco de dados
         EventosDB db = new EventosDB(MainActivity.this);
 
         ArrayList<Evento> saidasListas = db.buscaEvento(1, dataApp);

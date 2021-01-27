@@ -51,8 +51,54 @@ public class EventosDB extends SQLiteOpenHelper {
         }
 
     }
-    public void atualizaEvento(){
+    public void updateEvento(Evento eventoAtualizado){
+        try(SQLiteDatabase db = this.getWritableDatabase()){
+            ContentValues valores = new ContentValues();
+            valores.put("nome", eventoAtualizado.getNome());
+            valores.put("valor", eventoAtualizado.getValor());
+            valores.put("imagem", eventoAtualizado.getCaminhoFoto());
+            valores.put("dataocorreu", eventoAtualizado.getOcorreu().getTime());
+            valores.put("datavalida", eventoAtualizado.getValida().getTime());
 
+            db.update("evento", valores, "id = ?", new String[]{eventoAtualizado.getId()+ ""});
+
+
+        }catch (SQLiteException ex){
+            System.err.println("erro no atualização do evento");
+            ex.printStackTrace();
+        }
+
+    }
+
+    public Evento buscaEvento(int idEvento){
+        String sql = "SELECT*FROM evento WHERE id = "+idEvento;
+
+        Evento resultado = null;
+
+        try(SQLiteDatabase db = this.getWritableDatabase()){
+            //executa a sql
+            Cursor tupla = db.rawQuery(sql, null);
+
+            //extrai as informacoes do evento
+            if(tupla.moveToFirst()){
+
+                String nome = tupla.getString(1);
+                double valor = tupla.getDouble(2);
+                if(valor < 0 ){
+                    valor *=-1;
+                }
+                String urlfoto = tupla.getString(3);
+                Date dataocoreu = new Date(tupla.getLong(4));
+                Date datacadastro = new Date(tupla.getLong(5));
+                Date datavalida = new Date(tupla.getLong(6));
+                resultado = new Evento(idEvento, nome, valor, datacadastro, datavalida, dataocoreu, urlfoto);
+            }
+
+        }catch (SQLiteException ex){
+            System.err.println("erro da consulta SQL da busca de evento por id");
+            ex.printStackTrace();
+        }
+        return resultado;
     }
     public ArrayList<Evento> buscaEvento(int op, Calendar data){
 
@@ -63,7 +109,8 @@ public class EventosDB extends SQLiteOpenHelper {
         dia1.set(Calendar.HOUR, -12);
         dia1.set(Calendar.MINUTE, 0);
         dia1.set(Calendar.SECOND, 0);
-        //ultimo dia do mes(ultimo minuto)
+
+        //ultimo dia do mes
         Calendar dia2 = Calendar.getInstance();
         dia2.setTime(dia2.getTime());
         dia2.set(Calendar.DAY_OF_MONTH, dia2.getActualMaximum(Calendar.DAY_OF_MONTH));
@@ -81,7 +128,7 @@ public class EventosDB extends SQLiteOpenHelper {
             //Entradas
             sql+= ">= 0";
         }else{
-            //Saída(indicado por um valor negativo)
+            //Saida(indicado por um valor negativo)
             sql+="-< 0";
         }
 
@@ -119,6 +166,6 @@ public class EventosDB extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-    //ficará parado até a ativação da activity de update (funcionalidade)
+    //ficara parado ate a ativacao da activity de update
     }
 }

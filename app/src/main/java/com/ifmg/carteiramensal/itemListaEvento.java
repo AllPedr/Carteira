@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import modelo.Evento;
-// classe que define o comportamento e informações de cada um dos itens da lista de eventos
+// classe que define o comportamento e informacoes de cada um dos itens da lista de eventos
 public class itemListaEvento extends ArrayAdapter<Evento> {
 
     private Context contestoPai;
@@ -47,7 +47,7 @@ public class itemListaEvento extends ArrayAdapter<Evento> {
 
         final View resultado;
 
-        //1* é quando a lista esta sendo montada pela primeira vez.
+        //1- quando a lista esta sendo montada pela primeira vez
         if(convertView == null){
             novaView = new ViewHorder();
 
@@ -64,19 +64,19 @@ public class itemListaEvento extends ArrayAdapter<Evento> {
             resultado = convertView;
             convertView.setTag(novaView);
         }else{
-            //2* item modificado
+            //2- item modificado
             novaView = (ViewHorder) convertView.getTag();
             resultado = convertView;
 
         }
-        //vamos setar os valores de cada campo
+        //vamos settar os valores de cada campo
         novaView.nomeTxt.setText(eventoAtual.getNome());
         novaView.valorTxt.setText(eventoAtual.getValor()+"");
         novaView.fotoTxt.setText(eventoAtual.getCaminhoFoto() == null ? "Nao" : "Sim");
         SimpleDateFormat formataData = new SimpleDateFormat("dd/mm/yyyy");
         novaView.dataTxt.setText(formataData.format(eventoAtual.getOcorreu()));
 
-        //Verificando se o evento repete
+        //Verificar se o evento repete
         Calendar data1 = Calendar.getInstance();
         data1.setTime(eventoAtual.getOcorreu());
 

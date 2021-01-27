@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <!--ocupa toda tela do usuário-->
+    <!--ocupa tela inteira do usuario-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -22,15 +22,15 @@
             android:layout_marginTop="32dp"
             android:layout_marginBottom="70dp"/>
 
-        <!-- bloco lógico para o centro da tela
-        botão de entrada, TextView, botão de saída-->
+        <!-- bloco logico para o centro da tela
+        botao de entrada, TextView, botao de saida-->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_gravity="center">
 
-            <!-- botão de cadastro de entrada-->
+            <!-- botao de cadastro de entrada-->
             <ImageButton
                 android:id="@+id/entradaBtn"
                 android:layout_width="50dp"
@@ -39,13 +39,13 @@
                 android:layout_gravity="center"
                 android:layout_marginRight="10dp"/>
 
-            <!--bloco lógico para organizar os TextView-->
+            <!--bloco logico para organizar os TextView-->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <!--informação da entrada-->
+                <!--informacao da entrada-->
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -68,13 +68,13 @@
 
                 </LinearLayout>
 
-                <!--informações da saída-->
+                <!--informacoes da saida-->
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_gravity="center"
-                    android:layout_marginBottom="70dp">>
+                    android:layout_marginBottom="70dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -88,7 +88,7 @@
                         android:layout_height="wrap_content"
                         android:text="0,00"
                         android:textSize="17sp"
-                        android:layout_marginLeft="4dp"/>/>
+                        android:layout_marginLeft="4dp"/>
                 </LinearLayout>
 
                 <!--informações do saldo do mês corrente-->
@@ -110,12 +110,12 @@
                         android:layout_height="wrap_content"
                         android:text="0,00"
                         android:textSize="17sp"
-                        android:layout_marginLeft="4dp"/>/>
+                        android:layout_marginLeft="4dp"/>
 
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- botão de cadastro de saída-->
+            <!-- botao de cadastro de saida-->
             <ImageButton
                 android:id="@+id/saidaBtn"
                 android:layout_width="50dp"

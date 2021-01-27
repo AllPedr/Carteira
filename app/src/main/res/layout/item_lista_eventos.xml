@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <!--delimita o espaço do item-->
+    <!--delimita o espaco do item-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,7 +14,7 @@
         android:background="@drawable/apenasborda"
         android:layout_marginBottom="5dp">
 
-        <!--nome do evento-->
+        <!--nome do event-->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -81,7 +81,7 @@
                 android:textColor="@color/black"/>
         </LinearLayout>
 
-        <!--Fotos e indicaçãao da repetição-->
+        <!--Fotos e indicacao da repeticao-->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
